@@ -69,15 +69,8 @@ export function ArticlesSection() {
                 />
               </div>
 
-              <div className="space-y-4">
-                <h4 className="font-serif text-2xl text-[#2D2D2D]">The Art of Stillness</h4>
-                <p className="text-[13px] text-[#717171] font-light italic">by Pico Iyer</p>
-                <p className="text-sm text-[#717171] leading-relaxed">
-                  A beautiful exploration of why we need to step back from the rush of modern life.
-                </p>
-                <a href="#" className="block w-full text-center py-4 border border-[#2D2D2D] rounded-full text-[12px] font-medium tracking-widest uppercase hover:bg-[#2D2D2D] hover:text-[#FDFCF8] transition-all duration-300">
-                  Shop Recommendation
-                </a>
+              <div className="space-y-4 text-center">
+                <h4 className="font-serif text-3xl text-[#2D2D2D]">COMING SOON</h4>
               </div>
             </div>
           </div>
