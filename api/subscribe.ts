@@ -4,11 +4,6 @@ const EMAILOCTOPUS_API_KEY = process.env.VITE_EMAILOCTOPUS_API_KEY;
 const EMAILOCTOPUS_LIST_ID = process.env.VITE_EMAILOCTOPUS_LIST_ID;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-    // Only allow POST requests
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
-    }
-
     // Enable CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -17,6 +12,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Handle preflight request
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
+    }
+
+    // Only allow POST requests
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed' });
     }
 
     const { email } = req.body;
