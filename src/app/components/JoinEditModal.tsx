@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, Check, Mail, Sparkles, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ImageWithFallback } from '@/app/components/ui/ImageWithFallback';
+import { subscribeToNewsletter } from '@/lib/newsletter-api';
 import logoImg from '@/assets/host-image.png';
 
 interface JoinEditModalProps {
@@ -13,20 +14,32 @@ export function JoinEditModal({ isOpen, onClose }: JoinEditModalProps) {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      setTimeout(() => {
-        onClose();
-        setIsSuccess(false);
+    setErrorMessage('');
+
+    try {
+      const result = await subscribeToNewsletter(email);
+
+      if (result.success) {
+        setIsSuccess(true);
         setEmail('');
-      }, 3000);
-    }, 1500);
+        // Close modal after 3 seconds
+        setTimeout(() => {
+          onClose();
+          setIsSuccess(false);
+        }, 3000);
+      } else {
+        setErrorMessage(result.message);
+      }
+    } catch (error) {
+      setErrorMessage('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -132,6 +145,12 @@ export function JoinEditModal({ isOpen, onClose }: JoinEditModalProps) {
                           </>
                         )}
                       </button>
+
+                      {errorMessage && (
+                        <p className="text-red-500 text-sm text-center">
+                          {errorMessage}
+                        </p>
+                      )}
                     </form>
 
                     <p className="text-[10px] text-white/20 uppercase tracking-widest text-center">
