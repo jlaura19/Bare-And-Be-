@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-const EMAILOCTOPUS_API_KEY = process.env.VITE_EMAILOCTOPUS_API_KEY;
-const EMAILOCTOPUS_LIST_ID = process.env.VITE_EMAILOCTOPUS_LIST_ID;
+const EMAILOCTOPUS_API_KEY = process.env.EMAILOCTOPUS_API_KEY || process.env.VITE_EMAILOCTOPUS_API_KEY;
+const EMAILOCTOPUS_LIST_ID = process.env.EMAILOCTOPUS_LIST_ID || process.env.VITE_EMAILOCTOPUS_LIST_ID;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Enable CORS
